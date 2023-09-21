@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,28 +13,32 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SapperByBloodyAlpha
+namespace SapperByBloodyAlpha.AllPages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Game.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Game : Page
     {
-        private static int SizeX = 15;
-        private static int SizeY = 15;
+        private static int SizeX;
+        private static int SizeY;
         private static int CellCount = SizeX * SizeY;
-        private static int MineCount = 0; //Hard
-        Cell[,] Field = new Cell[SizeY, SizeX];
-        StackPanel[] StackX = new StackPanel[SizeX];
+        private static int MineCount; //Hard
+
         Random rnd = new Random();
 
-        public MainWindow(double DifucyGame)
+        public Game(double DifucyGame, int MSSSizeX, int MSSSizeY)
         {
             MineCount = Convert.ToInt32((SizeX * SizeY) / DifucyGame); //low
             InitializeComponent();
             FieldGenerator();
-            // NumberViwer(); //DevMode
+            NumberViwer(); //DevMode
+            SizeX = MSSSizeX; SizeY = MSSSizeY;
         }
+
+
+        Cell[,] Field = new Cell[SizeY, SizeX];
+        StackPanel[] StackX = new StackPanel[SizeX];
 
         public void FieldGenerator()
         {
@@ -60,15 +63,15 @@ namespace SapperByBloodyAlpha
             MineGenerator();
         }
 
-        private void Cell_MouseRightButtonDown (int y, int x)
+        private void Cell_MouseRightButtonDown(int y, int x)
         {
-            if (Field[y,x].Flags == false && Field[y,x].Active == false)
+            if (Field[y, x].Flags == false && Field[y, x].Active == false)
             {
                 Field[y, x].Flags = true;
                 Field[y, x].button.Content = "F";
 
             }
-            else if (Field[y,x].Flags == true && Field[y,x].Active == false) 
+            else if (Field[y, x].Flags == true && Field[y, x].Active == false)
             {
                 Field[y, x].Flags = false;
                 Field[y, x].button.Content = "";
@@ -89,7 +92,7 @@ namespace SapperByBloodyAlpha
                 Field[y, x].button.Content = Field[y, x].NumInCell;
                 Field[y, x].Active = true;
             }
-            else if (Field[y,x].IsMine == true)
+            else if (Field[y, x].IsMine == true)
             {
                 Field[y, x].Active = true;
                 Field[y, x].button.Content = "B";
@@ -122,7 +125,7 @@ namespace SapperByBloodyAlpha
                 }
             }
 
-            
+
         }
         public void NumberViwer()
         {
@@ -130,29 +133,14 @@ namespace SapperByBloodyAlpha
             {
                 for (int x = 0; x < Field.GetLength(1); x++)
                 {
-                    if (Field[y,x].IsMine == false)
+                    if (Field[y, x].IsMine == false)
                     {
                         Field[y, x].button.Content = Field[y, x].NumInCell;
-                    } 
+                    }
                 }
             }
         }
 
-
-        private void Btn_WinMinimize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
-        private void Btn_Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void Border_Windows_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (Mouse.LeftButton == MouseButtonState.Pressed) {this.DragMove();}
-        }
     }
 
     public class Cell
@@ -164,5 +152,5 @@ namespace SapperByBloodyAlpha
         public bool Flags;
 
     }
-
 }
+
