@@ -20,8 +20,8 @@ namespace SapperByBloodyAlpha.AllPages
     /// </summary>
     public partial class Game : Page
     {
-        private static int SizeX;
-        private static int SizeY;
+        private static int SizeX = 16;
+        private static int SizeY = 16;
         private static int CellCount = SizeX * SizeY;
         private static int MineCount; //Hard
 
@@ -30,17 +30,20 @@ namespace SapperByBloodyAlpha.AllPages
         public Game(double DifucyGame, int MSSSizeX, int MSSSizeY)
         {
             MineCount = Convert.ToInt32((SizeX * SizeY) / DifucyGame); //low
-            InitializeComponent();
-            FieldGenerator();
-            NumberViwer(); //DevMode
             SizeX = MSSSizeX; SizeY = MSSSizeY;
+
+            Cell[,] Field = new Cell[SizeY, SizeX];
+            StackPanel[] StackX = new StackPanel[SizeX];
+
+            InitializeComponent();
+            FieldGenerator(Field,StackX);
+            NumberViwer(Field, StackX); //DevMode
+
         }
 
 
-        Cell[,] Field = new Cell[SizeY, SizeX];
-        StackPanel[] StackX = new StackPanel[SizeX];
 
-        public void FieldGenerator()
+        public void FieldGenerator(Cell[,] Field, StackPanel[] StackX)
         {
             for (int y = 0; y != Field.GetLength(0); y++)
             {
@@ -56,14 +59,14 @@ namespace SapperByBloodyAlpha.AllPages
                     Field[y, x].button.Width = 20;
                     Field[y, x].button.Height = 20;
                     StackX[y].Children.Add(Field[y, x].button);
-                    Field[y, x].button.Click += (sender, args) => Cell_MouseLeftButtonDown(tempY, tempX);
-                    Field[y, x].button.MouseRightButtonDown += (sender, args) => Cell_MouseRightButtonDown(tempY, tempX);
+                    Field[y, x].button.Click += (sender, args) => Cell_MouseLeftButtonDown(tempY, tempX, Field, StackX);
+                    Field[y, x].button.MouseRightButtonDown += (sender, args) => Cell_MouseRightButtonDown(tempY, tempX, Field, StackX);
                 }
             }
-            MineGenerator();
+            MineGenerator(Field, StackX);
         }
 
-        private void Cell_MouseRightButtonDown(int y, int x)
+        private void Cell_MouseRightButtonDown(int y, int x, Cell[,] Field, StackPanel[] StackX)
         {
             if (Field[y, x].Flags == false && Field[y, x].Active == false)
             {
@@ -79,7 +82,7 @@ namespace SapperByBloodyAlpha.AllPages
 
         }
 
-        private void Cell_MouseLeftButtonDown(int y, int x)
+        private void Cell_MouseLeftButtonDown(int y, int x, Cell[,] Field, StackPanel[] StackX)
         {
             if (Field[y, x].IsMine == false && Field[y, x].NumInCell == 0)
             {
@@ -100,7 +103,7 @@ namespace SapperByBloodyAlpha.AllPages
 
         }
 
-        public void MineGenerator()
+        public void MineGenerator(Cell[,] Field, StackPanel[] StackX)
         {
             for (int i = 0; i < MineCount; i++)
             {
@@ -127,7 +130,7 @@ namespace SapperByBloodyAlpha.AllPages
 
 
         }
-        public void NumberViwer()
+        public void NumberViwer(Cell[,] Field, StackPanel[] StackX)
         {
             for (int y = 0; y < Field.GetLength(0); y++)
             {

@@ -9,6 +9,6 @@
       Title="Game">
 
     <Grid>
-        <StackPanel x:Name="StackY" Orientation="Vertical"></StackPanel>
+        <StackPanel x:Name="StackY" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
     </Grid>
 </Page>

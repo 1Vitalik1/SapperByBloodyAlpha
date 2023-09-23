@@ -37,7 +37,7 @@
 
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="1">
-                    <Frame x:Name="Pages_Selector"></Frame>
+                    <Frame x:Name="Pages_Selector" NavigationUIVisibility="Hidden"></Frame>
                 </Grid>
             </Grid>
         </Border>
