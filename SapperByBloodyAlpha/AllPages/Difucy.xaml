@@ -10,7 +10,11 @@
 
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Difucy:" Foreground="WhiteSmoke" FontSize="16" FontWeight="Black" HorizontalAlignment="Center"></Label>
+            <Label Content="Difucy:" Foreground="WhiteSmoke" FontSize="16" FontWeight="Black" HorizontalAlignment="Center">
+                <Label.Effect>
+                    <DropShadowEffect/>
+                </Label.Effect>
+            </Label>
             <Button x:Name="Btn_Hard" Width="140" Height="30" Content="Hard" FontSize="16" FontWeight="Black" Foreground="WhiteSmoke" Background="#171A24" Click="Btn_Hard_Click" >
                 <Button.Effect>
                     <DropShadowEffect />

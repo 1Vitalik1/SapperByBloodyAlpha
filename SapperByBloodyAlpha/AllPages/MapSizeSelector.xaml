@@ -10,7 +10,11 @@
 
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Map Size:" Foreground="WhiteSmoke" FontSize="16" FontWeight="Black" HorizontalAlignment="Center"></Label>
+            <Label Content="Map Size:" Foreground="WhiteSmoke" FontSize="16" FontWeight="Black" HorizontalAlignment="Center">
+                <Label.Effect>
+                    <DropShadowEffect/>
+                </Label.Effect>
+            </Label>
             <Button x:Name="Btn_Big" Width="140" Height="30" Content="Big" FontSize="16" FontWeight="Black" Foreground="WhiteSmoke" Background="#171A24" Click="Btn_Big_Click" >
                 <Button.Effect>
                     <DropShadowEffect />
@@ -36,18 +40,39 @@
                 </Button.Effect>
             </Button>
 
+
+
             <Button Width="140" Height="30" Content="Back" FontSize="16" FontWeight="Black" Background="#171A24" Foreground="WhiteSmoke" Click="Button_Click">
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>
             </Button>
 
+            <Border Background="#171A24" x:Name="Border_SizeXY" Visibility="Hidden">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Grid HorizontalAlignment="Left" >
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="X: " Foreground="White" FontSize="14" FontWeight="Black" HorizontalAlignment="Left"></Label>
+                                <TextBox x:Name="RTB_SizeX" Width="32" Height="26"></TextBox>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Y: " Foreground="White" FontSize="14" FontWeight="Black" ></Label>
+                                <TextBox x:Name="RTB_SizeY" Width="32" Height="26"></TextBox>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
         </StackPanel>
         <Label Content="BloodyAlphaStudio" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="Black" Foreground="Red" Background="{x:Null}">
             <Label.Effect>
                 <BlurEffect/>
             </Label.Effect>
         </Label>
-        <Label Content="BloodyAlphaStudio" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="Black" Foreground="WhiteSmoke"></Label>
+        <Label x:Name="Label_BAS" Content="BloodyAlphaStudio" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="Black" Foreground="WhiteSmoke"></Label>
     </Grid>
 </Page>

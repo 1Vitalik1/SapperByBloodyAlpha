@@ -9,6 +9,20 @@
       Title="Game">
 
     <Grid>
+        <Label x:Name="Label_GameDefeat" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Вы проиграли!" Foreground="White" FontWeight="Black" FontSize="18" Visibility="Hidden">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left" Width="28">
+            <Button x:Name="Btn_RestartGame" Height="25" Margin="1" Click="Btn_RestartGame_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image ></Image>
+                </StackPanel></Button>
+            <Button x:Name="Btn_SettingsField" Height="25" Margin="1" Click="Btn_SettingsField_Click"></Button>
+            <Button x:Name="Btn_MainMenu" Height="25" Margin="1" Click="Btn_MainMenu_Click"></Button>
+        </StackPanel>
+        
         <StackPanel x:Name="StackY" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
     </Grid>
 </Page>

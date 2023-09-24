@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,21 +24,20 @@ namespace SapperByBloodyAlpha.AllPages
         private static int SizeX = 16;
         private static int SizeY = 16;
         private static int CellCount = SizeX * SizeY;
-        private static int MineCount; //Hard
-
+        private static int MineCount;
+        private static double DifucyGameRest = 0;
         Random rnd = new Random();
 
         public Game(double DifucyGame, int MSSSizeX, int MSSSizeY)
         {
-            MineCount = Convert.ToInt32((SizeX * SizeY) / DifucyGame); //low
+            DifucyGameRest = DifucyGame;
+            MineCount = Convert.ToInt32(CellCount / DifucyGame); 
             SizeX = MSSSizeX; SizeY = MSSSizeY;
-
             Cell[,] Field = new Cell[SizeY, SizeX];
             StackPanel[] StackX = new StackPanel[SizeX];
-
             InitializeComponent();
             FieldGenerator(Field,StackX);
-            NumberViwer(Field, StackX); //DevMode
+            //NumberViwer(Field, StackX); //DevMode
 
         }
 
@@ -87,7 +87,20 @@ namespace SapperByBloodyAlpha.AllPages
             if (Field[y, x].IsMine == false && Field[y, x].NumInCell == 0)
             {
                 Field[y, x].Active = true;
-                //Тут будет код открытия пустых ячеек
+                if (Field[y, x].NumInCell == 0)
+                {
+                    for (int Y = 0; Y < Field.GetLength(0); Y++)
+                    {
+                        for (int X = 0; X < Field.GetLength(1); X++)
+                        {
+                            if (Field[Y,X].NumInCell == 0)
+                            {
+                                Field[Y,X].Active = true;
+                                Field[Y, X].button.Content = Field[y, x].NumInCell;
+                            }
+                        }
+                    }
+                }
             }
 
             if (Field[y, x].IsMine == false)
@@ -95,10 +108,20 @@ namespace SapperByBloodyAlpha.AllPages
                 Field[y, x].button.Content = Field[y, x].NumInCell;
                 Field[y, x].Active = true;
             }
-            else if (Field[y, x].IsMine == true)
+            else if (Field[y, x].IsMine == true && Field[y,x].Active == false)
             {
                 Field[y, x].Active = true;
                 Field[y, x].button.Content = "B";
+                Label_GameDefeat.Visibility = Visibility.Visible;
+                for (int Y = 0; Y < Field.GetLength(0); Y++)
+                {
+                    for (int X = 0; X < Field.GetLength(1);X++)
+                    {
+                        Field[Y, X].Active = true;
+                    } 
+                }
+                NumberViwer(Field, StackX);
+
             }
 
         }
@@ -113,7 +136,7 @@ namespace SapperByBloodyAlpha.AllPages
                 if (Field[MineY, MineX].IsMine == false)
                 {
                     Field[MineY, MineX].IsMine = true;
-
+                    Field[MineY, MineX].NumInCell = -1;
                     for (int y = -1; y <= 1; y++)
                     {
                         for (int x = -1; x <= 1; x++)
@@ -144,6 +167,23 @@ namespace SapperByBloodyAlpha.AllPages
             }
         }
 
+        private void Btn_RestartGame_Click(object sender, RoutedEventArgs e)
+        {
+            Game game = new Game(DifucyGameRest, SizeX, SizeY);
+            NavigationService.Navigate(game);
+        }
+
+        private void Btn_SettingsField_Click(object sender, RoutedEventArgs e)
+        {
+            MapSizeSelector mapSizeSelector = new MapSizeSelector();
+            NavigationService.Navigate(mapSizeSelector);
+        }
+
+        private void Btn_MainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            MainMenu mainMenu = new MainMenu();
+            NavigationService.Navigate(mainMenu);
+        }
     }
 
     public class Cell
